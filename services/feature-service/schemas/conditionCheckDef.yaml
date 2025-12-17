@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: MIT
+
+title: ConditionCallDef
+type: object
+additionalProperties: false
+required: [name, args]
+summary: <TODO>
+description: A condition definition check with arguments
+
+properties:
+  name:
+    type: string
+    summary: <TODO>
+    description: Condition name.
+
+  args:
+      type: array
+      items: { type: number }
+      summary: <TODO>
+      description: Condition arguments

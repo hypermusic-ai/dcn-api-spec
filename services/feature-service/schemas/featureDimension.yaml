@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: MIT
+
+title: FeatureDimension
+type: object
+additionalProperties: false
+required: [feature_name, transformations]
+summary: <TODO>
+description: A single dimension definition for a feature
+
+properties:
+  feature_name:
+    type: string
+    summary: <TODO>
+    description: Name of the dimension feature
+
+  transformations:
+    type: array
+    items: {$ref: "transformationCallDef.yaml"}
+    summary: <TODO>
+    description: Ordered list of transformations applied in this dimension

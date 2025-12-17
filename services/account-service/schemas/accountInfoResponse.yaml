@@ -1,0 +1,60 @@
+# SPDX-License-Identifier: MIT
+
+title: AccountInfoResponse
+type: object
+additionalProperties: false
+required: [address, limit, page, owned_features, owned_transformations, owned_conditions, total_features, total_transformations, total_conditions]
+summary: <TODO>
+description: <TODO>
+
+properties:
+  address: {$ref: ../../../shared/schemas/address.yaml}
+
+  limit:
+    type: integer
+    minimum: 1
+    maximum: 256
+    summary: Page size used for this response
+    description: <TODO>
+
+  page:
+    type: integer
+    minimum: 0
+    summary: Zero-based page index
+    description: <TODO>
+
+  owned_features:
+    type: array
+    items: {type: string}
+    summary: <TODO>
+    description: <TODO>
+
+  owned_transformations:
+    type: array
+    items: {type: string}
+    summary: <TODO>
+    description: <TODO>
+
+  owned_conditions:
+    type: array
+    items: {type: string }
+    summary: <TODO>
+    description: <TODO>
+
+  total_features:
+    type: integer
+    minimum: 0
+    summary: <TODO>
+    description: <TODO>
+
+  total_transformations:
+    type: integer
+    minimum: 0
+    summary: <TODO>
+    description: <TODO>
+
+  total_conditions:
+    type: integer
+    minimum: 0
+    summary: <TODO>
+    description: <TODO>

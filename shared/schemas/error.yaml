@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: MIT
+
+title : ErrorResponse
+type: object
+required: [message]
+summary: <TODO>
+description: Error response
+
+properties:
+  message:
+    type: string
+    summary: <TODO>
+    description: Human-readable message.

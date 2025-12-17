@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: MIT
+openapi: 3.0.3
+
+info:
+  title: DCN Runner Service
+  version: 0.1.0
+  description: DCN Runner Service
+
+servers:
+  - url: https://api.decentralised.art
+
+tags:
+  - name: runner
+    description: |
+      Operations related to feature execution.
+
+components:
+  securitySchemes:
+    BearerAuth:
+      $ref: ../../shared/security.yaml#/components/securitySchemes/BearerAuth
+
+paths:
+  /execute:
+
+    options:
+      tags: [runner]
+      operationId: OPTIONS_execute
+      summary: CORS preflight
+      description: CORS preflight
+
+      responses:
+        "204": 
+          description: No content
+
+    post:
+      tags: [runner]
+      operationId: POST_execute
+      summary: Execute
+      description: Execute a feature
+
+      security:
+        - BearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "schemas/executeRequest.yaml"}
+
+      responses:
+        "200":
+          description: Executed
+          content:
+            application/json:
+              schema: {$ref: "schemas/executeResponse.yaml"}
+
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema: { $ref: ../../shared/schemas/error.yaml }

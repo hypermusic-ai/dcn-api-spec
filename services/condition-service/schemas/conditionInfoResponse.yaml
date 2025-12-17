@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: MIT
+
+title: ConditionInfoResponse
+type: object
+additionalProperties: false
+required: [address, local_address, owner, name, sol_src]
+summary: <TODO>
+description: Condition information
+
+properties:
+  address: {$ref: "../../../shared/schemas/address.yaml"}
+  
+  local_address: {$ref: "../../../shared/schemas/address.yaml"}
+  
+  owner: {$ref: "../../../shared/schemas/address.yaml"}
+  
+  name:
+    type: string
+    summary: <TODO>
+    description: Condition name
+  
+  sol_src: 
+    type: string
+    summary: <TODO>
+    description: Solidity source

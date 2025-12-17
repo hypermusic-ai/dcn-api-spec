@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: MIT
+openapi: 3.0.3
+
+info:
+  title: DCN Core Service
+  version: 0.1.0
+  description: Core endpoints
+
+servers:
+  - url: https://api.decentralised.art
+
+tags:
+  - name: core
+    description: |
+      Operations related to core server information.
+
+paths:
+  /version:
+    
+    get:
+      tags: [core]
+      operationId: GET_version
+      summary: Get version
+      description: Get server build/version info
+      
+      responses:
+        "200":
+          description: Version info
+          content:
+            application/json:
+              schema: { $ref: schemas/versionResponse.yaml }

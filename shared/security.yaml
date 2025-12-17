@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      summary: <TODO>
+      description: |
+        JWT Bearer token issued by DCN Auth Service.
+        Header: Authorization: Bearer <access_token>

@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: MIT
+
+title: FeatureInfoResponse
+type: object
+additionalProperties: false
+required: [address, local_address, owner, name, dimensions, condition_name, condition_args]
+summary: <TODO>
+description: Feature information
+
+properties:
+  address: {$ref: "../../../shared/schemas/address.yaml"}
+  
+  local_address: {$ref: "../../../shared/schemas/address.yaml"}
+  
+  owner: {$ref: "../../../shared/schemas/address.yaml"}
+  
+  name:
+    type: string
+    summary: <TODO>
+    description: Feature name
+  
+  dimensions:
+    type: array
+    items: {$ref: "featureDimension.yaml"}
+    summary: <TODO>
+    description: <TODO>
+  
+  condition: {$ref: "conditionCheckDef.yaml"}

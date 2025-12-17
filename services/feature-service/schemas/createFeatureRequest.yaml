@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: MIT
+
+title: CreateFeatureRequest
+type: object
+additionalProperties: false
+required: [name, dimensions, condition]
+summary: <TODO>
+description: Create feature request
+
+properties:
+  name:
+    type: string
+    summary: <TODO>
+    description: Name of the feature.
+
+  dimensions:
+    type: array
+    items: {$ref: "featureDimension.yaml"}
+    summary: <TODO>
+    description: <TODO>
+  
+  condition: {$ref: "conditionCheckDef.yaml"}

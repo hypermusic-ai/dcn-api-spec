@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: MIT
+
+title: AuthRequest
+type: object
+additionalProperties: false
+required: [address, signature]
+summary: <TODO>
+description: Auth request
+
+properties:
+  address: { $ref: ../../../shared/schemas/address.yaml }
+
+  signature:
+    type: string
+    summary: <TODO>
+    description: Wallet signature of the server-provided nonce

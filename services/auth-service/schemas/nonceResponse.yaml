@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: MIT
+
+title: NonceResponse
+type: object
+additionalProperties: false
+required: [address, nonce]
+summary: <TODO>
+description: Nonce response
+
+properties:
+  address: {$ref: ../../../shared/schemas/address.yaml}
+
+  nonce:
+    type: string
+    summary: <TODO>
+    description: One-time nonce to be signed by the account owner

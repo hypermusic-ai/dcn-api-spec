@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: MIT
+
+title: CreateConditionRequest
+type: object
+additionalProperties: false
+required: [name, sol_src]
+summary: <TODO>
+description: Create condition request
+
+properties:
+  name:
+    type: string
+    summary: <TODO>
+    description: Name of the condition
+  
+  sol_src: 
+    type: string
+    summary: <TODO>
+    description: Solidity source code

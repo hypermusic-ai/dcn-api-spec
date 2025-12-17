@@ -1,0 +1,79 @@
+# SPDX-License-Identifier: MIT
+openapi: 3.0.3
+
+info:
+  title: DCN Auth Service
+  version: 0.1.0
+  description: DCN Auth Service
+
+servers:
+  - url: https://api.decentralised.art
+
+tags:
+  - name: auth
+    description: |
+      Operations related to authentication.
+
+paths:
+  /nonce/{address}:
+    parameters:
+      - name: address
+        in: path
+        required: true
+        schema: { $ref: ../../shared/schemas/address.yaml }
+        description: Address to get nonce for
+
+    get:
+      tags: [auth]
+      operationId: GET_nonce
+      summary: Get nonce
+      description: Get nonce for an address (for signature-based login)
+
+      responses:
+        "200":
+          description: Nonce returned
+          content:
+            application/json:
+              schema: { $ref: schemas/nonceResponse.yaml }
+        
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema: { $ref: ../../shared/schemas/error.yaml }
+
+  /auth:
+    options:
+      tags: [auth]
+      operationId: OPTIONS_auth
+      summary: CORS preflight
+      description: CORS preflight
+
+      responses:
+        "204":
+          description: No content 
+
+    post:
+      tags: [auth]
+      operationId: POST_auth
+      summary: Authenticate
+      description: Authenticate (sign-in) using address + signature over nonce
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: schemas/authRequest.yaml}
+
+      responses:
+        "200":
+          description: Authentication successful
+          content:
+            application/json:
+              schema: { $ref: schemas/authResponse.yaml }
+
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema: { $ref: ../../shared/schemas/error.yaml }

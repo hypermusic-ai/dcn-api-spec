@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT
+
+title : Address
+type: string
+summary: <TODO>
+description: Ethereum-style address (0x + 40 hex chars).
+pattern: '^0x[a-fA-F0-9]{40}$'

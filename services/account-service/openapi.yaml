@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: MIT
+openapi: 3.0.3
+
+info:
+  title: DCN Account Service
+  version: 0.1.0
+  description: DCN Account Service
+
+servers:
+  - url: https://api.decentralised.art
+
+tags:
+  - name: account
+    description: |
+      Operations related to account.
+
+paths:
+  /account/{address}:
+    parameters:
+      - name: address
+        in: path
+        required: true
+        schema: { $ref: ../../shared/schemas/address.yaml }
+        description: <TODO>
+
+    options:
+      tags: [account]
+      operationId: OPTIONS_account
+      summary: CORS preflight
+      description: CORS preflight
+
+      responses:
+        "204":
+          description: No content
+
+    get:
+      tags: [account]
+      operationId: GET_account
+      summary: Get account
+      description: Get account info for an address
+
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema: { type: integer, minimum: 1, maximum: 256 }
+          description: <TODO>
+
+        - name: page
+          in: query
+          required: true
+          schema: { type: integer, minimum: 0 }
+          description: <TODO>
+
+      responses:
+        "200":
+          description: Account info
+          content:
+            application/json:
+              schema: {$ref: schemas/accountInfoResponse.yaml}
+
+        "404":
+          description: Account not found
+          content:
+            application/json:
+              schema: { $ref: ../../shared/schemas/error.yaml }

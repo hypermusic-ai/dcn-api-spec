@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: MIT
+
+title: RunningInstance
+type: object
+additionalProperties: false
+required: [start_point, transformation_shift]
+summary: <TODO>
+description: <TODO>
+
+properties:
+  start_point:
+    type: integer
+    summary: <TODO>
+    description: <TODO>
+
+  transformation_shift:
+    type: integer
+    summary: <TODO>
+    description: <TODO>

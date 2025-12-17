@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: MIT
+
+title: ExecuteRequest
+type: object
+additionalProperties: false
+required: [name, n, running_instances]
+summary: <TODO>
+description: <TODO>
+
+properties:
+  name:
+    type: string
+    summary: <TODO>
+    description: Name of the feature.
+
+  n: 
+    type: integer
+    minimum: 1
+    summary: <TODO>
+    description: Samples count
+
+  running_instances:
+    type: array
+    items: {$ref: "runningInstance.yaml"}
+    summary: <TODO>
+    description: <TODO>

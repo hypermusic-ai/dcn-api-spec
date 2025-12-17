@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: MIT
+
+title: CreateTransformationResponse
+type: object
+additionalProperties: false
+required: [name]
+summary: <TODO>
+description: Create transformation response
+
+properties:
+  name:
+    type: string
+    summary: <TODO>
+    description: Name of the created transformation

@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: MIT
+
+title: AuthResponse
+type: object
+additionalProperties: false
+required: [access_token, token_type, expires_in]
+summary: <TODO>
+description: Auth response
+
+properties:
+  access_token: 
+    type: string
+    summary: <TODO>
+    description: <TODO>
+
+  expires_in:
+    type: integer
+    summary: <TODO>
+    description: Seconds until access token expiry.

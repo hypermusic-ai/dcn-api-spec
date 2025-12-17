@@ -2,21 +2,20 @@
 openapi: 3.0.3
 
 info:
-  title: DCN Feature Service
+  title: DCN Condition Service
   version: 0.1.0
   description: >
-    Feature registry endpoints. Supports fetching the latest feature by name,
-    fetching a specific version by deployed address, and registering a feature
-    from dimension definitions.
+    Condition registry endpoints. Supports fetching the latest condition by name,
+    fetching a specific version by deployed address, and registering a condition from Solidity source.
 
 servers:
   - url: https://api.decentralised.art
 
 tags:
-  - name: feature
+  - name: condition
     description: |
-      Operations related to feature contracts:
-      creation, definition and inspection.
+      Operations related to condition contracts:
+      creation, inspection, and source management.
 
 components:
   securitySchemes:
@@ -24,21 +23,21 @@ components:
       $ref: ../../shared/security.yaml#/components/securitySchemes/BearerAuth
 
 paths:
-  /feature/{name}:
+  /condition/{name}:
+
     parameters:
       - name: name
         in: path
         required: true
-        schema:
-          type: string
-        description: Name of the feature
+        schema: { type: string }
+        description: Name of the condition
 
     head:
-      tags: [feature]
-      operationId: HEAD_featureLatest
-      summary: Head latest feature
-      description: Check if a feature exists (latest)
-
+      tags: [condition]
+      operationId: HEAD_conditionLatest
+      summary: Head latest condition
+      description: Check if a condition exists (latest)
+  
       responses:
         "200":
           description: Exists
@@ -47,27 +46,27 @@ paths:
           description: Not found
 
     options:
-      tags: [feature]
-      operationId: OPTIONS_featureLatest
+      tags: [condition]
+      operationId: OPTIONS_conditionLatest
       summary: CORS preflight
-      description: CORS preflight for latest feature
+      description: CORS preflight
 
       responses:
         "204":
           description: No content
 
     get:
-      tags: [feature]
-      operationId: GET_featureLatest
-      summary: Get latest feature
-      description: Get latest version of a feature by name
-
+      tags: [condition]
+      operationId: GET_conditionLatest
+      summary: Get latest condition
+      description: Get newest (latest) version of a condition by name
+    
       responses:
         "200":
-          description: Latest feature
+          description: Latest condition
           content:
             application/json:
-              schema: {$ref: "schemas/featureInfoResponse.yaml"}
+              schema: {$ref: "schemas/conditionInfoResponse.yaml"}
 
         "404":
           description: Not found
@@ -75,26 +74,25 @@ paths:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }
 
-  /feature/{name}/{version}:
+  /condition/{name}/{version}:
     parameters:
       - name: name
         in: path
         required: true
-        schema:
-          type: string
-        description: Name of the feature
+        schema: { type: string }
+        description: Name of the condition
 
       - name: version
         in: path
         required: true
         schema: {$ref: ../../shared/schemas/address.yaml}
-        description: Version of the feature
+        description: Version of the condition
 
     head:
-      tags: [feature]
-      operationId: HEAD_featureVersion
-      summary: Head versioned feature 
-      description: Check if a specific feature version exists
+      tags: [condition]
+      operationId: HEAD_conditionVersion
+      summary: Head versioned condition
+      description: Check if a specific condition version exists
 
       responses:
         "200":
@@ -104,27 +102,27 @@ paths:
           description: Not found
 
     options:
-      tags: [feature]
-      operationId: OPTIONS_featureVersion
+      tags: [condition]
+      operationId: OPTIONS_conditionVersion
       summary: CORS preflight
-      description: CORS preflight for versioned feature
+      description: CORS preflight
 
       responses:
         "204":
           description: No content
 
     get:
-      tags: [feature]
-      operationId: GET_featureVersion
-      summary: Get versioned feature
-      description: Get a specific feature version by name
+      tags: [condition]
+      operationId: GET_conditionVersion
+      summary: Get versioned condition
+      description: Get a specific condition version by address
 
       responses:
         "200":
-          description: Feature info for a specific version
+          description: Condition info for a specific version
           content:
             application/json:
-              schema: {$ref: "schemas/featureInfoResponse.yaml"}
+              schema: {$ref: "schemas/conditionInfoResponse.yaml"}
 
         "404":
           description: Not found
@@ -132,14 +130,13 @@ paths:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }
 
-  /feature:
-
+  /condition:
     post:
-      tags: [feature]
-      operationId: POST_feature
-      summary: Register feature
-      description: Register a feature by name, dimensions and condition
-
+      tags: [condition]
+      operationId: POST_condition
+      summary: Register condition
+      description: Register a condition by name and its Solidity source
+      
       security:
         - BearerAuth: []
 
@@ -147,14 +144,14 @@ paths:
         required: true
         content:
           application/json:
-            schema: {$ref: "schemas/createFeatureRequest.yaml"}
+            schema: {$ref: "schemas/createConditionRequest.yaml"}
 
       responses:
         "201":
           description: Registered
           content:
             application/json:
-              schema: {$ref: "schemas/createFeatureResponse.yaml"}
+              schema: {$ref: "schemas/createConditionResponse.yaml"}
 
         "400":
           description: Invalid request
@@ -169,13 +166,13 @@ paths:
               schema: { $ref: ../../shared/schemas/error.yaml }
 
         "409":
-          description: Name already exists / conflict
+          description: Conflict
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }
 
         "500":
-          description: Compile/deploy/registry failure
+          description: Failure
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }

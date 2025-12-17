@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: MIT
+
+title: VersionResponse
+type: object
+additionalProperties: false
+required: [build_timestamp, version, hash]
+summary: <TODO>
+description: Version information
+
+properties:
+  build_timestamp:
+    type: string
+    summary: <TODO>
+    description: ISO-8601 build timestamp of the running server
+    example: "2025-12-16T21:42:11Z"
+
+  version:
+    type: string
+    summary: <TODO>
+    description: Human-readable service version
+    example: "0.1.0"
+
+  hash:
+    type: string
+    summary: <TODO>
+    description: Hash of the current build
+    example: "8a5edab282632443"

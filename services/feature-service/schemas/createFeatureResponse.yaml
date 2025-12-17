@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: MIT
+
+title: CreateFeatureResponse
+type: object
+additionalProperties: false
+required: [name]
+summary: <TODO>
+description: Create feature response
+
+properties:
+  name:
+    type: string
+    summary: <TODO>
+    description: Name of the created feature.

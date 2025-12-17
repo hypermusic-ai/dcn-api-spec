@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: MIT
+
+title: DimensionSamples
+type: object
+additionalProperties: false
+required: [dimension_path, data]
+summary: <TODO>
+description: <TODO>
+
+properties:
+  dimension_path:
+    type: string
+    summary: <TODO>
+    description: <TODO>
+
+  data:
+    type: array
+    items: { type: integer }
+    summary: <TODO>
+    description: <TODO>
