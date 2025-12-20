@@ -1,0 +1,53 @@
+###############################################################################
+# OpenAPI / Swagger specifications
+# - normalize line endings
+# - keep diffs and merges sane for YAML/JSON
+###############################################################################
+
+# Default: normalize all text files to LF in the repo
+* text=auto eol=lf
+
+# --- OpenAPI spec files (common locations / names) ---------------------------
+openapi.yaml  text eol=lf linguist-language=YAML
+openapi.yml   text eol=lf linguist-language=YAML
+openapi.json  text eol=lf linguist-language=JSON
+swagger.yaml  text eol=lf linguist-language=YAML
+swagger.yml   text eol=lf linguist-language=YAML
+swagger.json  text eol=lf linguist-language=JSON
+
+# Any specs under typical folders
+spec/**       text eol=lf
+specs/**      text eol=lf
+openapi/**    text eol=lf
+swagger/**    text eol=lf
+api/**        text eol=lf
+schemas/**    text eol=lf
+
+# File type rules
+*.yaml        text eol=lf
+*.yml         text eol=lf
+*.json        text eol=lf
+
+# Improve merges for structured text.
+# NOTE: Git doesn't ship a built-in "yaml" merge driver everywhere,
+# but "union" is widely available and avoids conflict markers in many cases.
+*.yaml        merge=union
+*.yml         merge=union
+
+# JSON merges are hard; keep default merge behavior, but make diffs more readable
+# if use a JSON diff driver in .gitconfig
+*.json        diff
+
+# Treat specs as documentation for GitHub language stats
+*.yaml        linguist-documentation
+*.yml         linguist-documentation
+*.json        linguist-documentation
+
+###############################################################################
+# Binary and lockfiles
+###############################################################################
+*.png         binary
+*.jpg         binary
+*.jpeg        binary
+*.gif         binary
+*.pdf         binary
