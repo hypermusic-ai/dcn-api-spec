@@ -3,19 +3,15 @@ openapi: 3.0.3
 
 info:
   title: DCN Transformation Service
-  version: 0.1.0
-  description: >
-    Transformation registry endpoints. Supports fetching the latest transformation by name,
-    fetching a specific version by deployed address, and registering a transformation from Solidity source.
+  version: 0.2.0
+  description: Transformation registry endpoints.
 
 servers:
-  - url: https://api.decentralised.art
+  - url: https://api.decentralised.art/chain
 
 tags:
   - name: transformation
-    description: |
-      Operations related to transformation contracts:
-      creation, inspection, and source management.
+    description: Transformation creation and inspection.
 
 components:
   securitySchemes:
@@ -24,155 +20,85 @@ components:
 
 paths:
   /transformation/{name}:
-
     parameters:
       - name: name
         in: path
         required: true
         schema: { type: string }
-        description: Name of the transformation
+        description: Transformation name.
 
     head:
       tags: [transformation]
-      operationId: HEAD_transformationLatest
-      summary: Head latest transformation
-      description: Check if a transformation of given name exists
-  
+      operationId: HEAD_transformation
+      summary: Check transformation existence
       responses:
         "200":
-          description: Exists
-
+          description: Exists.
         "404":
-          description: Not found
+          description: Not found.
 
     options:
       tags: [transformation]
-      operationId: OPTIONS_transformationLatest
+      operationId: OPTIONS_transformationByName
       summary: CORS preflight
-      description: CORS preflight
-
       responses:
         "204":
-          description: No content
+          description: No content.
 
     get:
       tags: [transformation]
-      operationId: GET_transformationLatest
-      summary: Get latest transformation
-      description: Get newest version of a transformation by name
-    
+      operationId: GET_transformation
+      summary: Get transformation by name
       responses:
         "200":
-          description: Latest transformation
+          description: Transformation info.
           content:
             application/json:
-              schema: {$ref: "schemas/transformationInfoResponse.yaml"}
-
-        "404":
-          description: Not found
+              schema: { $ref: "schemas/transformationInfoResponse.yaml" }
+        "400":
+          description: Invalid request.
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }
-
-  /transformation/{name}/{version}:
-    parameters:
-      - name: name
-        in: path
-        required: true
-        schema: { type: string }
-        description: Name of the transformation
-
-      - name: version
-        in: path
-        required: true
-        schema: {$ref: ../../shared/schemas/address.yaml}
-        description: Version of the transformation
-
-    head:
-      tags: [transformation]
-      operationId: HEAD_transformationVersion
-      summary: Head versioned transformation
-      description: Check if a specific transformation version exists
-
-      responses:
-        "200":
-          description: Exists
-
         "404":
-          description: Not found
-
-    options:
-      tags: [transformation]
-      operationId: OPTIONS_transformationVersion
-      summary: CORS preflight
-      description: CORS preflight
-
-      responses:
-        "204":
-          description: No content
-
-    get:
-      tags: [transformation]
-      operationId: GET_transformationVersion
-      summary: Get versioned transformation
-      description: Get a specific transformation version by address
-
-      responses:
-        "200":
-          description: Transformation info for a specific version
-          content:
-            application/json:
-              schema: {$ref: "schemas/transformationInfoResponse.yaml"}
-
-        "404":
-          description: Not found
+          description: Not found.
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }
 
   /transformation:
+    options:
+      tags: [transformation]
+      operationId: OPTIONS_transformation
+      summary: CORS preflight
+      responses:
+        "204":
+          description: No content.
+
     post:
       tags: [transformation]
       operationId: POST_transformation
-      summary: Register transformation
-      description: Register a transformation by name and its Solidity source
-      
+      summary: Publish transformation
       security:
         - BearerAuth: []
-
       requestBody:
         required: true
         content:
           application/json:
-            schema: {$ref: "schemas/createTransformationRequest.yaml"}
-
+            schema: { $ref: "schemas/createTransformationRequest.yaml" }
       responses:
         "201":
-          description: Registered
+          description: Published.
           content:
             application/json:
-              schema: {$ref: "schemas/createTransformationResponse.yaml"}
-
+              schema: { $ref: "schemas/createTransformationResponse.yaml" }
         "400":
-          description: Invalid request
+          description: Invalid request.
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }
-
         "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema: { $ref: ../../shared/schemas/error.yaml }
-
-        "409":
-          description: Conflict
-          content:
-            application/json:
-              schema: { $ref: ../../shared/schemas/error.yaml }
-
-        "500":
-          description: Failure
+          description: Unauthorized.
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }

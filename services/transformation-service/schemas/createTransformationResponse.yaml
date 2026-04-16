@@ -3,12 +3,15 @@
 title: CreateTransformationResponse
 type: object
 additionalProperties: false
-required: [name]
-summary: <TODO>
+required: [name, owner, address]
 description: Create transformation response
 
 properties:
   name:
     type: string
-    summary: <TODO>
     description: Name of the created transformation
+  owner:
+    $ref: "../../../shared/schemas/address.yaml"
+  address:
+    type: string
+    description: Deployed address placeholder (currently "0x0" in chain mode).

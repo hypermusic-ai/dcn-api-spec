@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: MIT
+
+title: ConnectorDimension
+type: object
+additionalProperties: false
+required: [transformations, composite, bindings]
+description: Single connector dimension definition.
+
+properties:
+  transformations:
+    type: array
+    items:
+      $ref: "transformationCallDef.yaml"
+    description: Ordered transformation calls for this dimension.
+
+  composite:
+    type: string
+    description: Connected composite connector name (empty string when none).
+
+  bindings:
+    type: object
+    additionalProperties:
+      type: string
+    description: >
+      Optional slot bindings map for composite connectors. Keys are canonical
+      decimal slot ids and values are connector names.

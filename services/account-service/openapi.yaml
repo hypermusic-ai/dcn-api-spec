@@ -3,11 +3,11 @@ openapi: 3.0.3
 
 info:
   title: DCN Account Service
-  version: 0.1.0
-  description: DCN Account Service
+  version: 0.2.0
+  description: Account ownership exploration (cursor-based).
 
 servers:
-  - url: https://api.decentralised.art
+  - url: https://api.decentralised.art/chain
 
 tags:
   - name: account
@@ -37,27 +37,39 @@ paths:
       tags: [account]
       operationId: GET_account
       summary: Get account
-      description: Get account info for an address
+      description: Get owned connectors/transformations/conditions for an address.
 
       parameters:
         - name: limit
           in: query
           required: true
           schema: { type: integer, minimum: 1, maximum: 256 }
-          description: <TODO>
+          description: Page size for each ownership list.
 
-        - name: page
+        - name: after_connectors
           in: query
-          required: true
-          schema: { type: integer, minimum: 0 }
-          description: <TODO>
+          required: false
+          schema: { type: string }
+          description: Cursor for owned connectors.
+
+        - name: after_transformations
+          in: query
+          required: false
+          schema: { type: string }
+          description: Cursor for owned transformations.
+
+        - name: after_conditions
+          in: query
+          required: false
+          schema: { type: string }
+          description: Cursor for owned conditions.
 
       responses:
         "200":
           description: Account info
           content:
             application/json:
-              schema: {$ref: schemas/accountInfoResponse.yaml}
+              schema: { $ref: schemas/accountInfoResponse.yaml }
 
         "404":
           description: Account not found

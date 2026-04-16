@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: MIT
+
+title: ParticlesResultItem
+type: object
+additionalProperties: false
+required: [path, data]
+description: One returned scalar stream for an execution path.
+
+properties:
+  path:
+    type: string
+    description: Fully-qualified execution path.
+
+  data:
+    type: array
+    items:
+      type: integer
+    description: Output particle values for this path.

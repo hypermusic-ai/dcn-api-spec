@@ -3,16 +3,16 @@ openapi: 3.0.3
 
 info:
   title: DCN Runner Service
-  version: 0.1.0
-  description: DCN Runner Service
+  version: 0.2.0
+  description: Connector execution endpoint.
 
 servers:
-  - url: https://api.decentralised.art
+  - url: https://api.decentralised.art/chain
 
 tags:
   - name: runner
     description: |
-      Operations related to feature execution.
+      Operations related to connector execution.
 
 components:
   securitySchemes:
@@ -21,7 +21,6 @@ components:
 
 paths:
   /execute:
-
     options:
       tags: [runner]
       operationId: OPTIONS_execute
@@ -29,14 +28,14 @@ paths:
       description: CORS preflight
 
       responses:
-        "204": 
+        "204":
           description: No content
 
     post:
       tags: [runner]
       operationId: POST_execute
       summary: Execute
-      description: Execute a feature
+      description: Execute a connector.
 
       security:
         - BearerAuth: []
@@ -45,17 +44,29 @@ paths:
         required: true
         content:
           application/json:
-            schema: {$ref: "schemas/executeRequest.yaml"}
+            schema: { $ref: "schemas/executeRequest.yaml" }
 
       responses:
         "200":
           description: Executed
           content:
             application/json:
-              schema: {$ref: "schemas/executeResponse.yaml"}
+              schema: { $ref: "schemas/executeResponse.yaml" }
 
         "400":
           description: Bad request
+          content:
+            application/json:
+              schema: { $ref: ../../shared/schemas/error.yaml }
+
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema: { $ref: ../../shared/schemas/error.yaml }
+
+        "404":
+          description: Connector not found
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }

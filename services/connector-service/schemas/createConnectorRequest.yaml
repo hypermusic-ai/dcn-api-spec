@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+
+title: CreateConnectorRequest
+type: object
+additionalProperties: false
+required: [name, dimensions, condition_name, condition_args]
+description: Connector publish request payload.
+
+properties:
+  name:
+    type: string
+    description: Connector name.
+
+  dimensions:
+    type: array
+    minItems: 1
+    items:
+      $ref: "connectorDimension.yaml"
+    description: Ordered dimension definitions.
+
+  condition_name:
+    type: string
+    description: Condition name. Empty string means no condition.
+
+  condition_args:
+    type: array
+    items:
+      type: integer
+    description: Condition arguments.
+
+  static_ri:
+    type: object
+    additionalProperties:
+      $ref: "runningInstance.yaml"
+    description: >
+      Optional static running-instance map. Keys are canonical decimal
+      positions (for example "0", "3", "5").

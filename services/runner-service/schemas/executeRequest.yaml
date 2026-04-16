@@ -3,24 +3,23 @@
 title: ExecuteRequest
 type: object
 additionalProperties: false
-required: [name, n, running_instances]
-summary: <TODO>
-description: <TODO>
+required: [connector_name, particles_count, dynamic_ri]
+description: Execute request payload.
 
 properties:
-  name:
+  connector_name:
     type: string
-    summary: <TODO>
-    description: Name of the feature.
+    description: Connector name to execute.
 
-  n: 
+  particles_count:
     type: integer
     minimum: 1
-    summary: <TODO>
-    description: Samples count
+    maximum: 65536
+    description: Number of particles to generate.
 
-  running_instances:
-    type: array
-    items: {$ref: "runningInstance.yaml"}
-    summary: <TODO>
-    description: <TODO>
+  dynamic_ri:
+    type: object
+    additionalProperties:
+      $ref: "runningInstance.yaml"
+    description: >
+      Dynamic running-instance overrides keyed by canonical decimal RI position.

@@ -1,0 +1,117 @@
+# SPDX-License-Identifier: MIT
+openapi: 3.0.3
+
+info:
+  title: DCN Connector Service
+  version: 0.2.0
+  description: >
+    Connector registry endpoints. Supports fetching a connector by name and
+    publishing a connector definition.
+
+servers:
+  - url: https://api.decentralised.art/chain
+
+tags:
+  - name: connector
+    description: Connector creation and inspection endpoints.
+
+components:
+  securitySchemes:
+    BearerAuth:
+      $ref: ../../shared/security.yaml#/components/securitySchemes/BearerAuth
+
+paths:
+  /connector/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Connector name.
+
+    head:
+      tags: [connector]
+      operationId: HEAD_connector
+      summary: Check connector existence
+      description: Returns 200 if connector exists.
+      responses:
+        "200":
+          description: Exists.
+        "404":
+          description: Not found.
+
+    options:
+      tags: [connector]
+      operationId: OPTIONS_connectorByName
+      summary: CORS preflight
+      responses:
+        "204":
+          description: No content.
+
+    get:
+      tags: [connector]
+      operationId: GET_connector
+      summary: Get connector by name
+      description: Returns connector definition, owner and derived format hash.
+      responses:
+        "200":
+          description: Connector info.
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/connectorInfoResponse.yaml"
+        "400":
+          description: Invalid connector name.
+          content:
+            application/json:
+              schema:
+                $ref: ../../shared/schemas/error.yaml
+        "404":
+          description: Connector not found.
+          content:
+            application/json:
+              schema:
+                $ref: ../../shared/schemas/error.yaml
+
+  /connector:
+    options:
+      tags: [connector]
+      operationId: OPTIONS_connector
+      summary: CORS preflight
+      responses:
+        "204":
+          description: No content.
+
+    post:
+      tags: [connector]
+      operationId: POST_connector
+      summary: Publish connector
+      description: Publish a connector definition.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/createConnectorRequest.yaml"
+      responses:
+        "201":
+          description: Published.
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/createConnectorResponse.yaml"
+        "400":
+          description: Invalid payload.
+          content:
+            application/json:
+              schema:
+                $ref: ../../shared/schemas/error.yaml
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: ../../shared/schemas/error.yaml

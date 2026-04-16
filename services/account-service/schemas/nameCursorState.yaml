@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: MIT
+
+title: NameCursorState
+type: object
+additionalProperties: false
+required: [has_more, next_after]
+description: Cursor state for one ownership list.
+
+properties:
+  has_more:
+    type: boolean
+    description: Indicates whether more names are available.
+
+  next_after:
+    type: string
+    nullable: true
+    description: Cursor token for the next page (or null when exhausted).

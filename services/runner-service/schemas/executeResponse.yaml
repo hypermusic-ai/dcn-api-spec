@@ -1,15 +1,7 @@
 # SPDX-License-Identifier: MIT
 
 title: ExecuteResponse
-type: object
-additionalProperties: false
-required: [samples]
-summary: <TODO>
-description: <TODO>
-
-properties:
-  samples:
-    type: array
-    items: {$ref: "dimensionSamples.yaml"}
-    summary: <TODO>
-    description: <TODO>
+type: array
+description: Execution result list.
+items:
+  $ref: "particlesResultItem.yaml"

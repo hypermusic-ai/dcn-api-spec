@@ -4,17 +4,15 @@ title: TransformationCallDef
 type: object
 additionalProperties: false
 required: [name, args]
-summary: <TODO>
-description: A transformation definition call with arguments, within a dimension
+description: Transformation invocation in a connector dimension.
 
 properties:
   name:
     type: string
-    summary: <TODO>
     description: Transformation name
 
   args:
     type: array
-    items: { type: number }
-    summary: <TODO>
-    description: Transformation arguments
+    items:
+      type: integer
+    description: Transformation arguments.

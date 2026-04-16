@@ -3,58 +3,52 @@
 title: AccountInfoResponse
 type: object
 additionalProperties: false
-required: [address, limit, page, owned_features, owned_transformations, owned_conditions, total_features, total_transformations, total_conditions]
-summary: <TODO>
-description: <TODO>
+required:
+  [
+    address,
+    limit,
+    owned_connectors,
+    owned_transformations,
+    owned_conditions,
+    cursor_connectors,
+    cursor_transformations,
+    cursor_conditions,
+  ]
+description: Cursor-based account ownership response.
 
 properties:
-  address: {$ref: ../../../shared/schemas/address.yaml}
+  address:
+    $ref: ../../../shared/schemas/address.yaml
 
   limit:
     type: integer
     minimum: 1
     maximum: 256
-    summary: Page size used for this response
-    description: <TODO>
+    description: Page size used for this response.
 
-  page:
-    type: integer
-    minimum: 0
-    summary: Zero-based page index
-    description: <TODO>
-
-  owned_features:
+  owned_connectors:
     type: array
-    items: {type: string}
-    summary: <TODO>
-    description: <TODO>
+    items:
+      type: string
+    description: Owned connector names.
 
   owned_transformations:
     type: array
-    items: {type: string}
-    summary: <TODO>
-    description: <TODO>
+    items:
+      type: string
+    description: Owned transformation names.
 
   owned_conditions:
     type: array
-    items: {type: string }
-    summary: <TODO>
-    description: <TODO>
+    items:
+      type: string
+    description: Owned condition names.
 
-  total_features:
-    type: integer
-    minimum: 0
-    summary: <TODO>
-    description: <TODO>
+  cursor_connectors:
+    $ref: "nameCursorState.yaml"
 
-  total_transformations:
-    type: integer
-    minimum: 0
-    summary: <TODO>
-    description: <TODO>
+  cursor_transformations:
+    $ref: "nameCursorState.yaml"
 
-  total_conditions:
-    type: integer
-    minimum: 0
-    summary: <TODO>
-    description: <TODO>
+  cursor_conditions:
+    $ref: "nameCursorState.yaml"

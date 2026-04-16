@@ -1,17 +1,23 @@
 # SPDX-License-Identifier: MIT
 
-title: CreateConditionResponse
+title: CreateConnectorResponse
 type: object
 additionalProperties: false
-required: [name, owner, address]
-description: Create condition response
+required: [name, owner, address, format_hash]
+description: Connector publish response payload.
 
 properties:
   name:
     type: string
-    description: Name of the created condition
+    description: Connector name.
+
   owner:
     $ref: "../../../shared/schemas/address.yaml"
+
   address:
     type: string
     description: Deployed address placeholder (currently "0x0" in chain mode).
+
+  format_hash:
+    type: string
+    description: Derived format hash for this connector definition.

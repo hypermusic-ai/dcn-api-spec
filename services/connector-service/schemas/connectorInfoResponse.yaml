@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: MIT
+
+title: ConnectorInfoResponse
+type: object
+additionalProperties: false
+required:
+  [
+    name,
+    dimensions,
+    condition_name,
+    condition_args,
+    owner,
+    address,
+    format_hash,
+  ]
+description: Connector definition payload returned by GET /connector/{name}.
+
+properties:
+  name:
+    type: string
+    description: Connector name.
+
+  dimensions:
+    type: array
+    items:
+      $ref: "connectorDimension.yaml"
+    description: Ordered dimension definitions.
+
+  condition_name:
+    type: string
+    description: Condition name. Empty string means no condition.
+
+  condition_args:
+    type: array
+    items:
+      type: integer
+    description: Condition arguments.
+
+  static_ri:
+    type: object
+    additionalProperties:
+      $ref: "runningInstance.yaml"
+    description: Optional static running-instance map.
+
+  owner:
+    $ref: "../../../shared/schemas/address.yaml"
+
+  address:
+    type: string
+    description: Deployed address placeholder (currently "0x0" in chain mode).
+
+  format_hash:
+    type: string
+    description: Derived format hash for this connector definition.
