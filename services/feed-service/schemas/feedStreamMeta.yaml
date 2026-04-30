@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: MIT
+
+title: FeedStreamMeta
+type: object
+additionalProperties: false
+required:
+  [
+    has_more,
+    last_seq,
+    requested_since_seq,
+    min_available_seq,
+    replay_floor_seq,
+    stale_since_seq,
+  ]
+description: JSON payload carried by `/feed/stream` `stream_meta` SSE frames.
+
+properties:
+  has_more:
+    type: boolean
+    description: Whether more replay deltas are available beyond the replay limit.
+
+  last_seq:
+    type: integer
+    format: int64
+    nullable: true
+    minimum: 0
+    description: Last stream sequence included in the replay page, or null when empty.
+
+  requested_since_seq:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Cursor requested by the client.
+
+  min_available_seq:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Oldest stream sequence still available for replay.
+
+  replay_floor_seq:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Effective replay lower bound used by the server.
+
+  stale_since_seq:
+    type: boolean
+    description: True when the requested cursor is older than the available replay floor.

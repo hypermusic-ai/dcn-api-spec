@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: MIT
+
+title: FeedEventPayload
+type: object
+additionalProperties: true
+required: [type, name, owner]
+description: >
+  Compact feed payload for discovery. Full entity details are available through
+  the exact entity endpoints.
+
+properties:
+  type:
+    type: string
+    enum: [connector, transformation, condition]
+    description: Entity kind represented by the feed item.
+
+  name:
+    type: string
+    description: Entity name.
+
+  owner:
+    $ref: "../../../shared/schemas/address.yaml"

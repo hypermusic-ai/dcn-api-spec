@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: MIT
+
+title: FeedPage
+type: object
+additionalProperties: false
+required: [limit, cursor, items]
+description: Newest-first feed page.
+
+properties:
+  limit:
+    type: integer
+    minimum: 1
+    maximum: 256
+    description: Page size used for this response.
+
+  cursor:
+    $ref: "feedCursor.yaml"
+
+  items:
+    type: array
+    items:
+      $ref: "feedItem.yaml"
+    description: Feed items in newest-first order.

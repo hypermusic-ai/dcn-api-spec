@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: MIT
+
+title: FeedItem
+type: object
+additionalProperties: false
+required:
+  [
+    feed_id,
+    event_type,
+    status,
+    visible,
+    tx_hash,
+    block_number,
+    tx_index,
+    log_index,
+    history_cursor,
+    created_at_ms,
+    updated_at_ms,
+    projector_version,
+    payload,
+  ]
+description: One projected chain feed item.
+
+properties:
+  feed_id:
+    type: string
+    description: Stable feed identity for this logical entity event.
+
+  event_type:
+    $ref: "feedEventType.yaml"
+
+  status:
+    $ref: "feedEventStatus.yaml"
+
+  visible:
+    type: boolean
+    description: False when the item should be hidden, for example after removal.
+
+  tx_hash:
+    type: string
+    description: Source transaction hash.
+
+  block_number:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Source block number.
+
+  tx_index:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Source transaction index inside the block.
+
+  log_index:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Source log index.
+
+  history_cursor:
+    type: string
+    description: Cursor identifying this feed item's position in history.
+
+  created_at_ms:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Feed creation time in Unix milliseconds.
+
+  updated_at_ms:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Feed update time in Unix milliseconds.
+
+  projector_version:
+    type: integer
+    minimum: 1
+    description: Feed projector version that produced this item.
+
+  payload:
+    $ref: "feedEventPayload.yaml"

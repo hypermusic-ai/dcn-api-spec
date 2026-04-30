@@ -18,6 +18,7 @@ consistent behavior across the entire ecosystem.
 - [Connector Service](https://hypermusic-ai.github.io/dcn-api-spec/connector-service.html)
 - [Transformation Service](https://hypermusic-ai.github.io/dcn-api-spec/transformation-service.html)
 - [Condition Service](https://hypermusic-ai.github.io/dcn-api-spec/condition-service.html)
+- [Feed Service](https://hypermusic-ai.github.io/dcn-api-spec/feed-service.html)
 - [Runner Service](https://hypermusic-ai.github.io/dcn-api-spec/runner-service.html)
 
 ---

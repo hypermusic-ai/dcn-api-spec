@@ -1,0 +1,158 @@
+# SPDX-License-Identifier: MIT
+openapi: 3.0.3
+
+info:
+  title: DCN Feed Service
+  version: 0.2.0
+  description: >
+    Event-feed discovery endpoints for recently added or updated DCN chain
+    entities. The feed exposes compact metadata for discovery and incremental
+    updates; exact entity endpoints remain the source of truth for full
+    connector, transformation, and condition payloads.
+
+servers:
+  - url: https://api.decentralised.art/chain
+
+tags:
+  - name: feed
+    description: Chain event feed paging and streaming endpoints.
+
+paths:
+  /feed:
+    options:
+      tags: [feed]
+      operationId: OPTIONS_feed
+      summary: CORS preflight
+      description: CORS preflight.
+      responses:
+        "204":
+          description: No content.
+
+    get:
+      tags: [feed]
+      operationId: GET_feed
+      summary: List feed items
+      description: >
+        Returns a newest-first page of feed items. Each item is keyed by a
+        stable `feed_id` and includes compact payload metadata identifying the
+        changed entity. Use `/connector/{name}`, `/transformation/{name}`, or
+        `/condition/{name}` to hydrate full entity details.
+
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 256
+          description: Page size. The current server requires this parameter.
+
+        - name: before
+          in: query
+          required: false
+          schema:
+            type: string
+          description: History cursor from a previous response `cursor.next_before`.
+
+        - name: type
+          in: query
+          required: false
+          schema:
+            $ref: "schemas/feedEventType.yaml"
+          description: Optional event type filter.
+
+        - name: include_unfinalized
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+          description: >
+            Set to `1` to include observed and safe events. Set to `0` to
+            return only finalized events. When omitted, the current server
+            includes unfinalized events.
+
+      responses:
+        "200":
+          description: Feed page.
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/feedPage.yaml"
+
+        "400":
+          description: Invalid query.
+          content:
+            application/json:
+              schema:
+                $ref: ../../shared/schemas/error.yaml
+
+  /feed/stream:
+    options:
+      tags: [feed]
+      operationId: OPTIONS_feedStream
+      summary: CORS preflight
+      description: CORS preflight.
+      responses:
+        "204":
+          description: No content.
+
+    get:
+      tags: [feed]
+      operationId: GET_feedStream
+      summary: Stream feed deltas
+      description: >
+        Opens a Server-Sent Events stream. The response starts with a bounded
+        replay from `since_seq`, then emits a `stream_meta` event describing the
+        replay window, and then tails live feed deltas. Delta event names match
+        their feed event type (`connector_added`, `transformation_added`, or
+        `condition_added`). The JSON in each delta `data:` frame conforms to
+        `schemas/feedStreamDelta.yaml`; `stream_meta` frame data conforms to
+        `schemas/feedStreamMeta.yaml`. Idle live streams emit keepalive
+        comments.
+
+      parameters:
+        - name: since_seq
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+            default: 0
+          description: Replay stream deltas with `stream_seq` greater than this value.
+
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 2048
+            default: 200
+          description: Maximum number of replay deltas returned before live tailing.
+
+      responses:
+        "200":
+          description: Server-Sent Events stream.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+              example: |
+                : min_available_seq=1
+
+                id: 42
+                event: connector_added
+                data: {"stream_seq":42,"event_type":"connector_added","status":"finalized","feed_id":"eth:1:connector_added:demo","history_cursor":"c1710000000000:10:0:eth:1:connector_added:demo","created_at_ms":1710000000000,"payload":{"type":"connector","name":"demo","owner":"0x0000000000000000000000000000000000000000"}}
+
+                event: stream_meta
+                data: {"has_more":false,"last_seq":42,"requested_since_seq":0,"min_available_seq":1,"replay_floor_seq":1,"stale_since_seq":false}
+
+        "400":
+          description: Invalid query.
+          content:
+            application/json:
+              schema:
+                $ref: ../../shared/schemas/error.yaml

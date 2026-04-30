@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: MIT
+
+title: FeedEventStatus
+type: string
+enum: [observed, safe, finalized, removed]
+description: Chain-finality or removal status for a feed item.

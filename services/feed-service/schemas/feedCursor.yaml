@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: MIT
+
+title: FeedCursor
+type: object
+additionalProperties: false
+required: [has_more, next_before]
+description: Pagination cursor metadata for `/feed`.
+
+properties:
+  has_more:
+    type: boolean
+    description: Whether another older page is available.
+
+  next_before:
+    type: string
+    nullable: true
+    description: Cursor to pass as `before` for the next older page.

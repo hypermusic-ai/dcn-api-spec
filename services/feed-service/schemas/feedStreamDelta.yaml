@@ -1,0 +1,46 @@
+# SPDX-License-Identifier: MIT
+
+title: FeedStreamDelta
+type: object
+additionalProperties: false
+required:
+  [
+    stream_seq,
+    event_type,
+    status,
+    feed_id,
+    history_cursor,
+    created_at_ms,
+    payload,
+  ]
+description: JSON payload carried by non-meta `/feed/stream` SSE data frames.
+
+properties:
+  stream_seq:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Monotonic stream sequence number.
+
+  event_type:
+    $ref: "feedEventType.yaml"
+
+  status:
+    $ref: "feedEventStatus.yaml"
+
+  feed_id:
+    type: string
+    description: Stable feed identity for this logical entity event.
+
+  history_cursor:
+    type: string
+    description: Cursor identifying the feed item's position in history.
+
+  created_at_ms:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Delta creation time in Unix milliseconds.
+
+  payload:
+    $ref: "feedEventPayload.yaml"
