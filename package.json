@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "docs:generate": "tools/generate-docs.sh",
+    "docs:generate": "bash tools/generate-docs.sh",
     "lint:openapi": "redocly lint services/*/openapi.yaml"
   },
   "devDependencies": {
