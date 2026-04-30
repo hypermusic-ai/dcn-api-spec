@@ -3,14 +3,18 @@
 title: AuthRequest
 type: object
 additionalProperties: false
-required: [address, signature]
-summary: <TODO>
-description: Auth request
+required: [address, message, signature]
+description: Auth request.
 
 properties:
   address: { $ref: ../../../shared/schemas/address.yaml }
 
+  message:
+    type: string
+    description: >
+      Login message signed by the account owner. Must be
+      `Login nonce: <nonce>`.
+
   signature:
     type: string
-    summary: <TODO>
-    description: Wallet signature of the server-provided nonce
+    description: Wallet signature of the login message.

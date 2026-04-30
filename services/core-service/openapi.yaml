@@ -3,11 +3,11 @@ openapi: 3.0.3
 
 info:
   title: DCN Core Service
-  version: 0.1.0
+  version: 0.2.0
   description: Core endpoints
 
 servers:
-  - url: https://api.decentralised.art
+  - url: https://api.decentralised.art/chain
 
 tags:
   - name: core

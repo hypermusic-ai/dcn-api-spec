@@ -3,17 +3,10 @@
 title: AuthResponse
 type: object
 additionalProperties: false
-required: [access_token, token_type, expires_in]
-summary: <TODO>
-description: Auth response
+required: [access_token]
+description: Auth response.
 
 properties:
-  access_token: 
+  access_token:
     type: string
-    summary: <TODO>
-    description: <TODO>
-
-  expires_in:
-    type: integer
-    summary: <TODO>
-    description: Seconds until access token expiry.
+    description: JWT access token for protected chain endpoints.

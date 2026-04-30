@@ -3,11 +3,11 @@ openapi: 3.0.3
 
 info:
   title: DCN Auth Service
-  version: 0.1.0
-  description: DCN Auth Service
+  version: 0.2.0
+  description: Chain authentication endpoints.
 
 servers:
-  - url: https://api.decentralised.art
+  - url: https://api.decentralised.art/chain
 
 tags:
   - name: auth
@@ -27,7 +27,9 @@ paths:
       tags: [auth]
       operationId: GET_nonce
       summary: Get nonce
-      description: Get nonce for an address (for signature-based login)
+      description: >
+        Get a one-time nonce for an address. Sign `Login nonce: <nonce>` and
+        submit it to `/auth`.
 
       responses:
         "200":
@@ -57,7 +59,7 @@ paths:
       tags: [auth]
       operationId: POST_auth
       summary: Authenticate
-      description: Authenticate (sign-in) using address + signature over nonce
+      description: Authenticate using an address, the signed login message, and its signature.
 
       requestBody:
         required: true
@@ -68,12 +70,18 @@ paths:
       responses:
         "200":
           description: Authentication successful
+          headers:
+            Authorization:
+              description: Bearer token for protected chain endpoints.
+              schema:
+                type: string
+                example: Bearer <access_token>
           content:
             application/json:
               schema: { $ref: schemas/authResponse.yaml }
 
-        "401":
-          description: Unauthorized
+        "400":
+          description: Invalid address, nonce, message, or signature.
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }
