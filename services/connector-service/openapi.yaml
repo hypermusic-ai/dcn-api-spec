@@ -7,9 +7,14 @@ info:
   description: >
     Connector registry endpoints. Supports fetching a connector by name and
     publishing a connector definition.
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
 
 servers:
   - url: https://api.decentralised.art/chain
+
+security: []
 
 tags:
   - name: connector
@@ -73,6 +78,12 @@ paths:
             application/json:
               schema:
                 $ref: ../../shared/schemas/error.yaml
+        "500":
+          description: Internal connector serialization or format lookup error.
+          content:
+            application/json:
+              schema:
+                $ref: ../../shared/schemas/error.yaml
 
   /connector:
     options:
@@ -111,6 +122,12 @@ paths:
                 $ref: ../../shared/schemas/error.yaml
         "401":
           description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: ../../shared/schemas/error.yaml
+        "500":
+          description: Internal connector format lookup error.
           content:
             application/json:
               schema:

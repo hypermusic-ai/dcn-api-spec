@@ -3,7 +3,7 @@
 title: ConnectorDimension
 type: object
 additionalProperties: false
-required: [transformations, composite, bindings]
+required: [transformations]
 description: Single connector dimension definition.
 
 properties:
@@ -15,12 +15,12 @@ properties:
 
   composite:
     type: string
-    description: Connected composite connector name (empty string when none).
+    description: Connected composite connector name. Omitted or empty string means none.
 
   bindings:
     type: object
     additionalProperties:
       type: string
     description: >
-      Optional slot bindings map for composite connectors. Keys are canonical
-      decimal slot ids and values are connector names.
+      Slot bindings map for composite connectors. Omitted means no bindings.
+      Keys are canonical decimal slot ids and values are connector names.

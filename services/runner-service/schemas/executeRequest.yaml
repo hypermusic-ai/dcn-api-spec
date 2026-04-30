@@ -3,7 +3,7 @@
 title: ExecuteRequest
 type: object
 additionalProperties: false
-required: [connector_name, particles_count, dynamic_ri]
+required: [connector_name, particles_count]
 description: Execute request payload.
 
 properties:
@@ -12,10 +12,15 @@ properties:
     description: Connector name to execute.
 
   particles_count:
-    type: integer
-    minimum: 1
-    maximum: 65536
-    description: Number of particles to generate.
+    oneOf:
+      - type: integer
+        minimum: 0
+        maximum: 65536
+      - type: string
+        pattern: "^(0|[1-9][0-9]*)$"
+    description: >
+      Number of particles to generate. The backend accepts protobuf JSON uint32
+      values and rejects values greater than 65536.
 
   dynamic_ri:
     type: object
@@ -23,3 +28,4 @@ properties:
       $ref: "runningInstance.yaml"
     description: >
       Dynamic running-instance overrides keyed by canonical decimal RI position.
+      Omitted means no overrides.

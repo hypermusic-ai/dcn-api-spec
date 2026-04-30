@@ -8,9 +8,19 @@ OUT_DIR="$REPO_ROOT/docs"
 # Ensure output dir exists
 mkdir -p "$OUT_DIR"
 
-# Ensure redoc-cli exists
-if ! command -v redoc-cli >/dev/null 2>&1; then
-  echo "ERROR: redoc-cli not found. Install it with: npm i -g redoc-cli" >&2
+# Ensure Redocly CLI exists
+REDOCLY_BIN="${REPO_ROOT}/node_modules/.bin/redocly"
+if [[ ! -x "$REDOCLY_BIN" ]]; then
+  if command -v redocly >/dev/null 2>&1; then
+    REDOCLY_BIN="redocly"
+  else
+    echo "ERROR: redocly not found. Run npm ci or install it with: npm i -D @redocly/cli" >&2
+    exit 1
+  fi
+fi
+
+if [[ "${REDOCLY_BIN}" == "${REPO_ROOT}/node_modules/.bin/redocly" && ! -x "$REDOCLY_BIN" ]]; then
+  echo "ERROR: local redocly binary is not executable: $REDOCLY_BIN" >&2
   exit 1
 fi
 
@@ -38,10 +48,10 @@ for svc_dir in "$SERVICES_DIR"/*/; do
   echo "→ $svc_name"
 
   # fail fast on invalid specs
-  redoc-cli lint "$spec"
+  "$REDOCLY_BIN" lint "$spec"
 
-  redoc-cli bundle "$spec" \
-    --output "$out" \
+  "$REDOCLY_BIN" build-docs "$spec" \
+    --output="$out" \
     --title "DCN – ${svc_name} API"
 done
 

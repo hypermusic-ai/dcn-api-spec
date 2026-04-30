@@ -4,16 +4,13 @@ title: CreateTransformationRequest
 type: object
 additionalProperties: false
 required: [name, sol_src]
-summary: <TODO>
 description: Create transformation request
 
 properties:
   name:
     type: string
-    summary: <TODO>
     description: Name of the transformation
-  
-  sol_src: 
+
+  sol_src:
     type: string
-    summary: <TODO>
     description: Solidity source code

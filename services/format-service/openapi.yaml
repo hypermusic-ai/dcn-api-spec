@@ -2,9 +2,9 @@
 openapi: 3.0.3
 
 info:
-  title: DCN Account Service
+  title: DCN Format Service
   version: 0.2.0
-  description: Account listing and ownership exploration (cursor-based).
+  description: Format hash listing and format membership exploration.
   license:
     name: MIT
     url: https://opensource.org/license/mit
@@ -15,15 +15,14 @@ servers:
 security: []
 
 tags:
-  - name: account
-    description: |
-      Operations related to account.
+  - name: format
+    description: Format hash and connector membership endpoints.
 
 paths:
-  /accounts:
+  /formats:
     options:
-      tags: [account]
-      operationId: OPTIONS_accounts
+      tags: [format]
+      operationId: OPTIONS_formats
       summary: CORS preflight
       description: CORS preflight
 
@@ -32,10 +31,10 @@ paths:
           description: No content
 
     head:
-      tags: [account]
-      operationId: HEAD_accounts
-      summary: Check account list query
-      description: Returns 200 when the account list query is valid.
+      tags: [format]
+      operationId: HEAD_formats
+      summary: Check format list query
+      description: Returns 200 when the format list query is valid.
 
       parameters:
         - name: limit
@@ -49,8 +48,8 @@ paths:
           required: false
           schema:
             type: string
-            pattern: "^(0x)?[a-fA-F0-9]{40}$"
-          description: Account cursor from a previous response `cursor.next_after`.
+            pattern: "^(0x)?[a-fA-F0-9]{64}$"
+          description: Format hash cursor from a previous response `cursor.next_after`.
 
       responses:
         "200":
@@ -60,10 +59,10 @@ paths:
           description: Invalid query.
 
     get:
-      tags: [account]
-      operationId: GET_accounts
-      summary: List accounts
-      description: List chain accounts known to the registry.
+      tags: [format]
+      operationId: GET_formats
+      summary: List format hashes
+      description: List connector format hashes known to the registry.
 
       parameters:
         - name: limit
@@ -77,33 +76,33 @@ paths:
           required: false
           schema:
             type: string
-            pattern: "^(0x)?[a-fA-F0-9]{40}$"
-          description: Account cursor from a previous response `cursor.next_after`.
+            pattern: "^(0x)?[a-fA-F0-9]{64}$"
+          description: Format hash cursor from a previous response `cursor.next_after`.
 
       responses:
         "200":
-          description: Account page
+          description: Format hash page.
           content:
             application/json:
-              schema: { $ref: schemas/accountListResponse.yaml }
+              schema: { $ref: "schemas/formatListResponse.yaml" }
 
         "400":
-          description: Invalid query
+          description: Invalid query.
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }
 
-  /account/{address}:
+  /format/{hash}:
     parameters:
-      - name: address
+      - name: hash
         in: path
         required: true
-        schema: { $ref: ../../shared/schemas/address.yaml }
-        description: <TODO>
+        schema: { $ref: "schemas/formatHash.yaml" }
+        description: Connector format hash.
 
     options:
-      tags: [account]
-      operationId: OPTIONS_account
+      tags: [format]
+      operationId: OPTIONS_format
       summary: CORS preflight
       description: CORS preflight
 
@@ -112,45 +111,33 @@ paths:
           description: No content
 
     get:
-      tags: [account]
-      operationId: GET_account
-      summary: Get account
-      description: Get owned connectors/transformations/conditions for an address.
+      tags: [format]
+      operationId: GET_format
+      summary: Get format membership
+      description: List connector names and scalar labels for a format hash.
 
       parameters:
         - name: limit
           in: query
           required: true
           schema: { type: integer, minimum: 1, maximum: 256 }
-          description: Page size for each ownership list.
+          description: Page size for connector names.
 
-        - name: after_connectors
+        - name: after
           in: query
           required: false
           schema: { type: string }
-          description: Cursor for owned connectors.
-
-        - name: after_transformations
-          in: query
-          required: false
-          schema: { type: string }
-          description: Cursor for owned transformations.
-
-        - name: after_conditions
-          in: query
-          required: false
-          schema: { type: string }
-          description: Cursor for owned conditions.
+          description: Connector name cursor from a previous response `cursor.next_after`.
 
       responses:
         "200":
-          description: Account info
+          description: Format membership.
           content:
             application/json:
-              schema: { $ref: schemas/accountInfoResponse.yaml }
+              schema: { $ref: "schemas/formatInfoResponse.yaml" }
 
         "400":
-          description: Invalid address, limit, or cursor
+          description: Invalid format hash, limit, or cursor.
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }

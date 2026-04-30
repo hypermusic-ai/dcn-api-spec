@@ -9,9 +9,14 @@ info:
     entities. The feed exposes compact metadata for discovery and incremental
     updates; exact entity endpoints remain the source of truth for full
     connector, transformation, and condition payloads.
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
 
 servers:
   - url: https://api.decentralised.art/chain
+
+security: []
 
 tags:
   - name: feed

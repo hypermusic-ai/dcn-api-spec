@@ -11,6 +11,15 @@ New-Item -ItemType Directory -Force -Path $DocsDir | Out-Null
 
 Write-Host "Generating OpenAPI documentation with Redoc..." -ForegroundColor Cyan
 
+$LocalRedocly = Join-Path $RepoRoot "node_modules/.bin/redocly"
+if (Test-Path $LocalRedocly) {
+    $Redocly = $LocalRedocly
+} elseif (Get-Command redocly -ErrorAction SilentlyContinue) {
+    $Redocly = "redocly"
+} else {
+    throw "redocly not found. Run npm ci or install it with: npm i -D @redocly/cli"
+}
+
 $GeneratedServices = @()
 
 Get-ChildItem -Path $ServicesDir -Directory | ForEach-Object {
@@ -27,9 +36,12 @@ Get-ChildItem -Path $ServicesDir -Directory | ForEach-Object {
     Write-Host " → $serviceName" -ForegroundColor Green
     $script:GeneratedServices += $serviceName
 
-    redoc-cli bundle `
+    & $Redocly lint `
+        $openapiFile
+
+    & $Redocly build-docs `
         $openapiFile `
-        --output $outputFile `
+        --output=$outputFile `
         --title "DCN - $serviceName API"
 }
 

@@ -3,7 +3,7 @@
 title: CreateConnectorRequest
 type: object
 additionalProperties: false
-required: [name, dimensions, condition_name, condition_args]
+required: [name, dimensions]
 description: Connector publish request payload.
 
 properties:
@@ -20,13 +20,13 @@ properties:
 
   condition_name:
     type: string
-    description: Condition name. Empty string means no condition.
+    description: Condition name. Omitted or empty string means no condition.
 
   condition_args:
     type: array
     items:
       type: integer
-    description: Condition arguments.
+    description: Condition arguments. Omitted means no condition arguments.
 
   static_ri:
     type: object

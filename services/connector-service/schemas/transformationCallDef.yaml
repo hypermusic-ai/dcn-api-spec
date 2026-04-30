@@ -3,7 +3,7 @@
 title: TransformationCallDef
 type: object
 additionalProperties: false
-required: [name, args]
+required: [name]
 description: Transformation invocation in a connector dimension.
 
 properties:
@@ -15,4 +15,4 @@ properties:
     type: array
     items:
       type: integer
-    description: Transformation arguments.
+    description: Transformation arguments. Omitted means no arguments.

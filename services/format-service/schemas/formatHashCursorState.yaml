@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: MIT
+
+title: FormatHashCursorState
+type: object
+additionalProperties: false
+required: [has_more, next_after]
+description: Cursor state for the format hash list.
+
+properties:
+  has_more:
+    type: boolean
+    description: Indicates whether more format hashes are available.
+
+  next_after:
+    type: string
+    nullable: true
+    pattern: "^(0x)?[a-fA-F0-9]{64}$"
+    description: Format hash cursor for the next page, or null when exhausted.

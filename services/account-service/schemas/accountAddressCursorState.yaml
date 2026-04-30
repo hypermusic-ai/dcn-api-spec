@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: MIT
+
+title: AccountAddressCursorState
+type: object
+additionalProperties: false
+required: [has_more, next_after]
+description: Cursor state for the account list.
+
+properties:
+  has_more:
+    type: boolean
+    description: Indicates whether more account addresses are available.
+
+  next_after:
+    type: string
+    nullable: true
+    pattern: "^(0x)?[a-fA-F0-9]{40}$"
+    description: Account cursor for the next page, or null when exhausted.

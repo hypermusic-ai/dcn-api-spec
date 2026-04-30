@@ -7,7 +7,9 @@ required: [address, owner, name, sol_src]
 description: Transformation information
 
 properties:
-  address: { $ref: "../../../shared/schemas/address.yaml" }
+  address:
+    type: string
+    description: Deployed address placeholder (currently "0x0" in chain mode).
 
   owner: { $ref: "../../../shared/schemas/address.yaml" }
 

@@ -12,6 +12,7 @@ properties:
     description: Name of the created condition
   owner:
     $ref: "../../../shared/schemas/address.yaml"
+
   address:
     type: string
     description: Deployed address placeholder (currently "0x0" in chain mode).

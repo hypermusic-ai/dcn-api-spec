@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+
+title: FormatInfoResponse
+type: object
+additionalProperties: false
+required: [format_hash, limit, total_connectors, cursor, scalars, connectors]
+description: Connector membership and scalar labels for one format hash.
+
+properties:
+  format_hash:
+    $ref: "formatHash.yaml"
+
+  limit:
+    type: integer
+    minimum: 1
+    maximum: 256
+    description: Page size used for connector names.
+
+  total_connectors:
+    type: integer
+    minimum: 0
+    description: Total number of connectors using this format hash.
+
+  cursor:
+    $ref: "formatNameCursorState.yaml"
+
+  scalars:
+    type: array
+    items:
+      type: string
+    description: Scalar labels encoded as `scalar:tail_id` entries.
+
+  connectors:
+    type: array
+    items:
+      type: string
+    description: Connector names using this format hash.

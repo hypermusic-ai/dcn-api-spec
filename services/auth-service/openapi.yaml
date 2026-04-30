@@ -5,9 +5,14 @@ info:
   title: DCN Auth Service
   version: 0.2.0
   description: Chain authentication endpoints.
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
 
 servers:
   - url: https://api.decentralised.art/chain
+
+security: []
 
 tags:
   - name: auth

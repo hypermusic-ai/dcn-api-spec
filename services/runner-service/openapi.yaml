@@ -5,9 +5,14 @@ info:
   title: DCN Runner Service
   version: 0.2.0
   description: Connector execution endpoint.
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
 
 servers:
   - url: https://api.decentralised.art/chain
+
+security: []
 
 tags:
   - name: runner
@@ -67,6 +72,12 @@ paths:
 
         "404":
           description: Connector not found
+          content:
+            application/json:
+              schema: { $ref: ../../shared/schemas/error.yaml }
+
+        "500":
+          description: Internal execution or response decoding error
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }

@@ -5,9 +5,14 @@ info:
   title: DCN Condition Service
   version: 0.2.0
   description: Condition registry endpoints.
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
 
 servers:
   - url: https://api.decentralised.art/chain
+
+security: []
 
 tags:
   - name: condition
@@ -62,6 +67,11 @@ paths:
               schema: { $ref: ../../shared/schemas/error.yaml }
         "404":
           description: Not found.
+          content:
+            application/json:
+              schema: { $ref: ../../shared/schemas/error.yaml }
+        "500":
+          description: Internal condition serialization error.
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }

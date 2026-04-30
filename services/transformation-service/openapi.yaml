@@ -5,9 +5,14 @@ info:
   title: DCN Transformation Service
   version: 0.2.0
   description: Transformation registry endpoints.
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
 
 servers:
   - url: https://api.decentralised.art/chain
+
+security: []
 
 tags:
   - name: transformation
@@ -62,6 +67,11 @@ paths:
               schema: { $ref: ../../shared/schemas/error.yaml }
         "404":
           description: Not found.
+          content:
+            application/json:
+              schema: { $ref: ../../shared/schemas/error.yaml }
+        "500":
+          description: Internal transformation serialization error.
           content:
             application/json:
               schema: { $ref: ../../shared/schemas/error.yaml }
