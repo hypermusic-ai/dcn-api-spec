@@ -1,8 +1,7 @@
 {
   "scripts": {
     "docs:generate": "bash tools/generate-docs.sh",
-    "lint:openapi": "redocly lint services/*/openapi.yaml",
-    "sdk:bundle": "python tools/generate-sdk.py bundle --spec-root . --output generated/openapi/dcn-sdk.openapi.yaml"
+    "lint:openapi": "redocly lint services/*/openapi.yaml"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.25.2",
